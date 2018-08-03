@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--boottraps-->
+    <!-- Latest compiled and minified CSS -->
+    <title>Nad Robot</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>-->
+
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <!--end boot traps-->
+    <link rel="stylesheet" type="text/css" href="/index2.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <!--<script src="https://cdn.webrtc-experiment.com/getStats.js"></script>-->
+
+    <!--&lt;!&ndash; or min.js &ndash;&gt;-->
+    <!--<script src="https://cdn.webrtc-experiment.com/getStats.min.js"></script>-->
+
+    <!--&lt;!&ndash; or without CDN &ndash;&gt;-->
+    <!--<script src="https://www.webrtc-experiment.com/getStats.js"></script>-->
+
+    <!--&lt;!&ndash; or rawgit &ndash;&gt;-->
+    <!--<script src="https://rawgit.com/muaz-khan/getStats/master/getStats.js"></script>-->
+    <script src="webrtc.js"></script>
+    <!-- Load TensorFlow.js -->
+    <!--/////////////////////////////tensorflow start from here/////////////////////////////////////-->
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.12.0"> </script>
+
+    <!-- Place your code in the script tag below. You can also use an external .js file -->
+    <script>
+        var configureDiv;
+        var upButton;
+        var descButton;
+        function configureIO() {
+            if(configureDiv.style.display === "block"){
+                configureDiv.style.display="none";
+            }else{
+                configureDiv.style.display = "block";
+            }
+            // console.log(configureDiv.style.display);
+            return 0;
+        }
+        function hide_unhide_Video() {
+            if(localVideoDiv.style.display === "block"){
+                localVideoDiv.style.display="none";
+                upButton.style.display = "block";
+                descButton.style.display = "none";
+            }else{
+                localVideoDiv.style.display = "block";
+                upButton.style.display = "none";
+                descButton.style.display = "block";
+            }
+        }
+    </script>
+    <style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        .btn {
+            background-color: DodgerBlue;
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Darker background on mouse-over */
+        .btn:hover {
+            background-color: RoyalBlue;
+        }
+        #remoteVideo{
+            position: fixed;top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -10;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            background-size: cover;
+        }
+    </style>
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////-->
+</head>
+
+<body>
+<div id="container" class="container">
+
+    <!--<div class="highlight">-->
+    <!--<p>New codelab: <a href="https://codelabs.developers.google.com/codelabs/webrtc-web">Realtime communication with WebRTC</a></p>-->
+    <!--</div>-->
+    <!--<div class="row" id="labName">-->
+        <!--<div class="col-sm-2"></div>-->
+        <!--<div class="col-sm-8">-->
+            <!--<p class="h1 text-primary text-center"><em>NAD </em>ROBOT</p>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<h1><a href="//webrtc.github.io/samples/" title="WebRTC samples homepage">WebRTC samples</a><span>Select sources &amp; outputs</span></h1>-->
+
+    <br/>
+
+
+
+</div>
+<div class="row">
+    <video id="remoteVideo" autoplay></video>
+</div>
+<!--style="position: fixed;top: 50%;left: 50%;min-width: 100%;min-height: 100%;width: auto;height: auto;  z-index: -100;-webkit-transform: translateX(-50%) translateY(-50%);transform: translateX(-50%) translateY(-50%);background-size: cover;"-->
+<div class="footer">
+    <!--<div class="row">-->
+    <div id="configureDiv" style="display:none;">
+        <div class="col-*-*">
+            <div class="select">
+                <label for="audioSource">Audio input source: </label><select id="audioSource" onchange="changeDevice()"></select>
+            </div>
+        </div>
+    <!--</div>-->
+    <!--<div class="row">-->
+        <div class="col-*-*">
+            <div class="select">
+                <label for="audioOutput">Audio output destination: </label><select id="audioOutput" onchange="changeDevice()"></select>
+            </div>
+        </div>
+    <!--</div>-->
+    <!--<div class="row">-->
+        <div class="col-*-*">
+            <div class="select">
+                <label for="videoSource">Video source: </label><select id="videoSource" onchange="changeDevice()"></select>
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+    <div class="row">
+        <!--<div class="col-sm-1"></div>-->
+        <div class="col-sm-2">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button class="btn" onclick="configureIO()"><i class="fa fa-cog"></i></button>
+                <button class="btn" id="descButton" onclick="hide_unhide_Video()"><i class="fa fa-sort-desc"></i></button>
+                <button class="btn" id="upButton" style="display: none;" onclick="hide_unhide_Video()"><i class="fa fa-sort-up"></i></button>
+                <button class="btn" id="start" onclick="start(true)"><i class="fa fa-power-off"></i></button>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row" id="localVideoDiv">
+        <div class="col-sm-3">
+            <video id="localVideo" autoplay muted style="width:100%; z-index: 100;"></video>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--<br />-->
+
+
+
+<script type="text/javascript">
+    pageReady();
+
+</script>
+
+</body>
+</html>
